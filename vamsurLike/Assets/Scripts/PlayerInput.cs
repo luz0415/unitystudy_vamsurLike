@@ -28,6 +28,12 @@ public class PlayerInput : MonoBehaviour
 
         upMove = Input.GetAxis(upAxisName);
         rightMove = Input.GetAxis(rightAxisName);
-        mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // 화면 좌표에서 출발해 카메라를 통해 월드좌표로 발사할 Ray
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit)) // Ray가 발사해 맞았다면
+        {
+            mousePosition = hit.point; // mousePosition에 맞은 월드좌표 대입
+        }
     }
 }
