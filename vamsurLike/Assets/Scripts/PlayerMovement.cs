@@ -23,13 +23,20 @@ public class PlayerMovement : MonoBehaviour
         Move();
         Rotate();
 
-        playerAnimator.SetFloat("Move", playerInput.upMove);
+        if (playerInput.upMove == 0 && playerInput.rightMove != 0)
+        {
+            playerAnimator.SetFloat("Move", Mathf.Abs(playerInput.rightMove));
+        }
+        else
+        {
+            playerAnimator.SetFloat("Move", playerInput.upMove);
+        }
     }
 
     private void Move()
     {
-        Vector3 inputDistance = new Vector3(playerInput.rightMove, 0f, playerInput.upMove);
-        Vector3 moveDistance = inputDistance.normalized * moveSpeed * Time.deltaTime;
+        Vector3 inputDistance = Vector3.ClampMagnitude(new Vector3(playerInput.rightMove, 0f, playerInput.upMove), 1f);
+        Vector3 moveDistance = inputDistance * moveSpeed * Time.deltaTime;
         playerRigidbody.MovePosition(playerRigidbody.position + moveDistance);
     }
 

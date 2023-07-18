@@ -13,7 +13,7 @@ public class PlayerInput : MonoBehaviour
     {
         upMove = 0f;
         rightMove = 0f;
-        mousePosition = Vector3.zero;
+        mousePosition = transform.rotation.eulerAngles;
     }
 
     private void Update()
