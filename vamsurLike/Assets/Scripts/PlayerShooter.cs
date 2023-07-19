@@ -26,7 +26,10 @@ public class PlayerShooter : MonoBehaviour
 
     private void Update()
     {
-        gun.Fire();      
+        if(GameManager.instance != null && !GameManager.instance.isGameover)
+        {
+            gun.Fire();
+        }   
     }
     private void OnAnimatorIK(int layerIndex)
     {
