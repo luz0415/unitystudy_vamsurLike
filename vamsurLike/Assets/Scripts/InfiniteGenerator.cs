@@ -12,7 +12,7 @@ public class InfiniteGenerator : MonoBehaviour
 
     public float generateSpace = 27f;
 
-    private void Awake()
+    private void Start()
     {
         levelSpawningPool = MapManager.instance.gameObject;
     }
@@ -21,6 +21,30 @@ public class InfiniteGenerator : MonoBehaviour
     {
         nearLevels = new InfiniteGenerator[] { null, null, null, null };
     }
+    private void OnDisable()
+    {
+        if (nearLevels[up] != null)
+        {
+            nearLevels[up].nearLevels[down] = null;
+            nearLevels[up] = null;
+        }
+        if (nearLevels[down] != null)
+        {
+            nearLevels[down].nearLevels[up] = null;
+            nearLevels[down] = null;
+        }
+        if (nearLevels[left] != null)
+        {
+            nearLevels[left].nearLevels[right] = null;
+            nearLevels[left] = null;
+        }
+        if (nearLevels[right] != null)
+        {
+            nearLevels[right].nearLevels[left] = null;
+            nearLevels[right] = null;
+        }
+    }
+
     public void FillNearLevels()
     {
         Vector3 newPosition = Vector3.zero;
@@ -77,6 +101,8 @@ public class InfiniteGenerator : MonoBehaviour
         newLevel.transform.position = generatePosition;
         newLevel.transform.rotation = generateRotation;
         newLevel.gameObject.SetActive(true);
+
+        MapManager.instance.activeLevels.Add(newLevel.gameObject);
 
         return newLevel;
     }

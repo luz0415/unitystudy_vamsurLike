@@ -17,7 +17,7 @@ public class BoundaryDetector : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject == target)
+        if(other.gameObject == target && !GameManager.instance.isGameover)
         {
             // 상하좌우 채워주기
             infiniteGenerator.FillNearLevels();
