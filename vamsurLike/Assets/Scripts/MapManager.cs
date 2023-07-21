@@ -43,19 +43,20 @@ public class MapManager : MonoBehaviour
 
     private void CleanLevels()
     {
-        print("Cleaning");
         InfiniteGenerator nearestLevel = null;
         float nearestDistance = 30f;
         for (int i = 0; i < activeLevels.Count; i++)
         {
-            if(nearestLevel == null)
+            Vector3 playerPosition = GameManager.instance.player.transform.position;
+            float distance = Vector3.Distance(playerPosition, activeLevels[i].transform.position);
+
+            if (nearestLevel == null)
             {
                 nearestLevel = activeLevels[i].GetComponent<InfiniteGenerator>();
+                nearestDistance = distance;
             }
             else
             {
-                Vector3 playerPosition = GameManager.instance.player.transform.position;
-                float distance = Vector3.Distance(playerPosition, activeLevels[i].transform.position);
                 if(distance < nearestDistance)
                 {
                     nearestDistance = distance;
@@ -63,7 +64,7 @@ public class MapManager : MonoBehaviour
                 }
             }
         }
-
+        print(nearestLevel.gameObject.name);
         List<GameObject> remainLevels = new List<GameObject> { nearestLevel.gameObject };
 
         for (int i = 0; i < 4; i++)
