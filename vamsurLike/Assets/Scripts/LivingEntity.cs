@@ -32,7 +32,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
         else HP = startingHP;
     }
 
-    protected virtual void Dead()
+    public virtual void Dead()
     {
         if(onDeath != null) onDeath();
         dead = true;

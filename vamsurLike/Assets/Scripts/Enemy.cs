@@ -16,8 +16,11 @@ public class Enemy : LivingEntity
     private float lastAttackTime;
     public float timeBetAttack = 0.5f;
 
+    public float timeBetInactive = 3.0f;
+
     private Animator enemyAnimator;
 
+    public ParticleSystem bloodSprayEffect;
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -34,7 +37,21 @@ public class Enemy : LivingEntity
         enemyAnimator = GetComponent<Animator>();
     }
 
-    private void Setup(float newHP, float newDamage, float newSpeed, Color newColor)
+    protected override void OnEnable()
+    {
+        base.OnEnable(); 
+        
+        Collider[] colliders = GetComponents<Collider>();
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            colliders[i].enabled = true;
+        }
+
+        agent.isStopped = false;
+        agent.enabled = true;
+    }
+
+    public void Setup(Color newColor, float newSpeed = 3.5f, float newHP = 100f, float newDamage = 8f)
     {
         startingHP = newHP;
         HP = newHP;
@@ -48,7 +65,11 @@ public class Enemy : LivingEntity
 
     private void Update()
     {
-        if (dead) return;
+        if (dead)
+        {
+            print("dead해서 업데이트 안함");
+            return;
+        }
 
         if(lastChaseTime + timeBetChase <= Time.time)
         {
@@ -61,15 +82,15 @@ public class Enemy : LivingEntity
     {
         if (!dead)
         {
-
+            bloodSprayEffect.transform.position = hitPoint;
+            bloodSprayEffect.transform.rotation = Quaternion.LookRotation(hitNormal);
+            bloodSprayEffect.Play();
         }
         base.OnDamage(damage, hitPoint, hitNormal);
     }
 
-    protected override void Dead()
+    public override void Dead()
     {
-        base.Dead();
-
         Collider[] colliders = GetComponents<Collider>();
         for (int i = 0; i < colliders.Length; i++)
         {
@@ -80,7 +101,13 @@ public class Enemy : LivingEntity
         agent.enabled = false;
 
         enemyAnimator.SetTrigger("Die");
+
+        float timeAfterDead = Time.time;
+        //while (timeAfterDead + timeBetInactive >= Time.time) { }
+
+        base.Dead();
     }
+
     private void OnTriggerStay(Collider other)
     {
         if(!dead && lastAttackTime + timeBetAttack <= Time.time)

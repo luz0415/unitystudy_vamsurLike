@@ -360,6 +360,7 @@
 -analyzer:"C:/Program Files/Unity/Hub/Editor/2022.3.1f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 "Assets/Scripts/BoundaryDetector.cs"
 "Assets/Scripts/Enemy.cs"
+"Assets/Scripts/EnemySpawner.cs"
 "Assets/Scripts/GameManager.cs"
 "Assets/Scripts/Gun.cs"
 "Assets/Scripts/IDamageable.cs"

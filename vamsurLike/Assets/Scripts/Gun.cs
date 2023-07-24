@@ -41,10 +41,15 @@ public class Gun : MonoBehaviour
     private void Shot()
     {
         RaycastHit hit;
-        Vector3 hitPosition = Vector3.zero;
+        Vector3 hitPosition;
 
         if (Physics.Raycast(fireTransform.position, fireTransform.forward, out hit, bulletDistance)){
-            // 충돌한 물체 인식
+            IDamageable hitObject = hit.collider.GetComponent<IDamageable>();
+            if(hitObject != null)
+            {
+                hitObject.OnDamage(damage, hit.point, hit.normal);
+            }
+
             hitPosition = hit.point;
         }
         else
