@@ -367,6 +367,7 @@
 "Assets/Scripts/InfiniteGenerator.cs"
 "Assets/Scripts/LivingEntity.cs"
 "Assets/Scripts/MapManager.cs"
+"Assets/Scripts/NavMeshBaker.cs"
 "Assets/Scripts/PlayerHP.cs"
 "Assets/Scripts/PlayerInput.cs"
 "Assets/Scripts/PlayerMovement.cs"

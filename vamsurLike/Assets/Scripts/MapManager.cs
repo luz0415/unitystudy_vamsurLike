@@ -16,12 +16,14 @@ public class MapManager : MonoBehaviour
     public float timeBetCleanLevels = 2.0f;
     private float lastClearTime;
 
+    public NavMeshBaker navMeshBaker;
+
     private void Awake()
     {
         instance = this;
         lastClearTime = 0f;
     }
-
+    
     private void Update()
     {
         if(lastClearTime + timeBetCleanLevels <= Time.time)
@@ -41,8 +43,13 @@ public class MapManager : MonoBehaviour
         childLevel.SetActive(false);
     }
 
-    private void CleanLevels()
+    public void CleanLevels()
     {
+        if (levelGroup.childCount <= 5)
+        {
+            return;
+        }
+
         InfiniteGenerator nearestLevel = null;
         float nearestDistance = 30f;
         for (int i = 0; i < activeLevels.Count; i++)
@@ -87,5 +94,7 @@ public class MapManager : MonoBehaviour
 
         activeLevels.Clear();
         activeLevels = remainLevels.ToList();
+
+        navMeshBaker.BakeNavMesh();
     }
 }
