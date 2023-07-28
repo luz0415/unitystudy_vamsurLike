@@ -263,7 +263,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 2524805729220714153, guid: 553f3688039af6147b06f5e93e9fdde9, type: 3}
-  activeEnemies: []
   timeMinSpawn: 3
   timeMaxSpawn: 5
   timeMinWave: 12
@@ -273,8 +272,8 @@ MonoBehaviour:
   bigWaveEnemyMin: 7
   bigWaveEnemyMax: 10
   spawnDistance: 15
-  enemySpeedMin: 2.5
-  enemySpeedMax: 5
+  enemySpeedMin: 4
+  enemySpeedMax: 8
 --- !u!1001 &131748180
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1339,7 +1338,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.44175175, y: -0.000000015436479, z: 0.0000000076009465, w: 0.89713734}
+  m_LocalRotation: {x: 0.44175175, y: 0.000000015436493, z: -0.000000007600953, w: 0.89713734}
   m_LocalPosition: {x: 0, y: 20, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1545,7 +1544,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
+  m_VoxelSize: 0.083333336
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 3bea41fc51188b1489ccc177e46146c5, type: 2}
   m_BuildHeightMesh: 0
@@ -2073,7 +2072,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1667872141}
-  m_LocalRotation: {x: 0.44175175, y: -0.000000015436479, z: 0.0000000076009465, w: 0.89713734}
+  m_LocalRotation: {x: 0.44175175, y: 0.000000015436493, z: -0.000000007600953, w: 0.89713734}
   m_LocalPosition: {x: 0, y: 20, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

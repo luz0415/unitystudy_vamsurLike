@@ -76,6 +76,20 @@ public class Enemy : LivingEntity
             lastChaseTime = Time.time;
             agent.SetDestination(targetObject.transform.position);
         }
+
+        //NavMeshSurface 위에 있는지 검사
+        NavMeshHit hit;
+        if(NavMesh.SamplePosition(agent.transform.position, out hit, 30.0f, NavMesh.AllAreas))
+        {
+            if (Vector3.Distance(hit.position, transform.position) > 0.1f)
+            {
+                transform.position = hit.position;
+            }
+        }
+        else // 너무 멀면 죽음 처리
+        {
+            Dead();
+        }
     }
 
     public override void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)

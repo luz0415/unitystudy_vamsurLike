@@ -8,7 +8,6 @@ public class EnemySpawner : MonoBehaviour
     private GameObject player;
 
     public GameObject enemy;
-    public List<Enemy> activeEnemies;
 
     private float lastTimeSpawn;
     private float timeBetSpawn;
@@ -31,8 +30,8 @@ public class EnemySpawner : MonoBehaviour
 
     public float spawnDistance = 15f;
 
-    public float enemySpeedMin = 2.5f;
-    public float enemySpeedMax = 5f;
+    public float enemySpeedMin = 5f;
+    public float enemySpeedMax = 10f;
 
     private void Awake()
     {
@@ -41,7 +40,8 @@ public class EnemySpawner : MonoBehaviour
             player = GameManager.instance.player;
         }
 
-        timeBetSpawn = Random.Range(timeMinSpawn, timeMaxSpawn);
+        lastTimeSpawn = -3f;
+        timeBetSpawn = 3f;
 
         lastTimeWave = 0f;
         timeBetWave = Random.Range(timeMinWave, timeMaxWave);
@@ -55,6 +55,7 @@ public class EnemySpawner : MonoBehaviour
 
         if(lastTimeSpawn + timeBetSpawn <= Time.time)
         {
+            timeBetSpawn = Random.Range(timeMinSpawn, timeMaxSpawn);
             lastTimeSpawn = Time.time;
             spawnEnemy(1);
         }
@@ -84,9 +85,9 @@ public class EnemySpawner : MonoBehaviour
     private void spawnEnemy(int enemyNum)
     {
         Vector3 spawnPoint;
-        while (!RandomPoint(player.transform.position, spawnDistance, out spawnPoint)) { }
+        RandomPoint(player.transform.position, spawnDistance, out spawnPoint);
 
-        for(int i = 0; i < enemyNum; i++)
+        for (int i = 0; i < enemyNum; i++)
         {
             Enemy newEnemy;
             if (transform.childCount > 0) 
@@ -104,7 +105,6 @@ public class EnemySpawner : MonoBehaviour
 
                 newEnemy.onDeath += () => print("ENEMY DEAD!!");
                 newEnemy.onDeath += () => newEnemy.transform.parent = transform;
-                newEnemy.onDeath += () => activeEnemies.Remove(newEnemy);
                 newEnemy.onDeath += () => newEnemy.gameObject.SetActive(false);
             }
 
@@ -114,7 +114,6 @@ public class EnemySpawner : MonoBehaviour
             Color newColor = Color.Lerp(Color.white, Color.red, enemyIntensity);
 
             newEnemy.Setup(newColor, newSpeed);
-            activeEnemies.Add(newEnemy);
         }
 
     }
