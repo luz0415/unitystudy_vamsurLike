@@ -27,18 +27,13 @@ public class PlayerExp : MonoBehaviour
 
         if(exp >= levelExp) 
         {
-            LevelUp();
+            GameManager.instance.LevelUp();
             exp -= levelExp;
             levelExp *= levelUpMultiple;
         }
 
         expSlider.maxValue = levelExp;
         expSlider.value = exp;
-    }
-
-    private void LevelUp()
-    {
-        // 증강 선택
     }
 
     private void OnTriggerEnter(Collider other)
