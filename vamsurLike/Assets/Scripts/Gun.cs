@@ -16,12 +16,22 @@ public class Gun : MonoBehaviour
     public float timeBetFire = 0.5f;
     private float lastFireTime;
 
+    public float thirdBulletDamage;
+    private int fireCount;
+
+    public float lifeStealRatio;
+    public PlayerHP playerHP;
+
     public float bulletLineWidth { get; private set; } = 0.02f;
     private LineRenderer bulletLineRenderer;
 
     private void Start()
     {
         lastFireTime = 0f;
+        fireCount = 0;
+
+        thirdBulletDamage = 1f;
+        lifeStealRatio = 0f;
 
         bulletLineRenderer = GetComponent<LineRenderer>();
         bulletLineRenderer.positionCount = 2;
@@ -40,6 +50,22 @@ public class Gun : MonoBehaviour
 
     private void Shot()
     {
+        float shotDamage = damage;
+        fireCount++;
+        if (fireCount == 3) // 크라켄 적용
+        {
+            if(thirdBulletDamage > 1f) // 능력 적용이 되었다면
+            {
+                shotDamage *= thirdBulletDamage;
+                bulletLineRenderer.material.SetColor("_EmissionColor", Color.red);
+            }
+            fireCount = 0;
+        }
+        else // 크라켄 미적용
+        {
+            bulletLineRenderer.material.SetColor("_EmissionColor", new Color(255, 232, 0));
+        }
+
         RaycastHit hit;
         Vector3 hitPosition;
 
@@ -47,7 +73,8 @@ public class Gun : MonoBehaviour
             IDamageable hitObject = hit.collider.GetComponent<IDamageable>();
             if(hitObject != null)
             {
-                hitObject.OnDamage(damage, hit.point, hit.normal);
+                hitObject.OnDamage(shotDamage, hit.point, hit.normal);
+                playerHP.RestoreHP(shotDamage * lifeStealRatio);
             }
 
             hitPosition = hit.point;
@@ -58,6 +85,7 @@ public class Gun : MonoBehaviour
         }
 
         StartCoroutine(ShotEffect(hitPosition));
+
     }
 
     private IEnumerator ShotEffect(Vector3 hitPosition)

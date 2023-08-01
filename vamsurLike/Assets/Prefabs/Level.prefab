@@ -6935,10 +6935,10 @@ Transform:
   - {fileID: 4900867597346708}
   - {fileID: 4330862216071004}
   - {fileID: 4980162625215884}
+  - {fileID: 1920371782875937334}
   - {fileID: 4211854424357684}
   - {fileID: 4616455647152212}
   - {fileID: 4231756747796808}
-  - {fileID: 1920371782875937334}
   - {fileID: 4390036488419488}
   m_Father: {fileID: 0}
   m_RootOrder: -1
@@ -25589,8 +25589,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 25, y: 0.7855482, z: 25}
-  m_Center: {x: -1.5, y: 0.3927741, z: 1.5}
+  m_Size: {x: 25, y: 1.8563726, z: 25}
+  m_Center: {x: -1.5, y: -0.14263809, z: 1.5}
 --- !u!114 &2031927520028738474
 MonoBehaviour:
   m_ObjectHideFlags: 0

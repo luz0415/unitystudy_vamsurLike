@@ -334,6 +334,14 @@ PrefabInstance:
       propertyPath: navMeshBaker
       value: 
       objectReference: {fileID: 1044945131}
+    - target: {fileID: 5768316137947624385, guid: 92c6993c45605f84ea39cbb94d1e2502, type: 3}
+      propertyPath: m_Size.y
+      value: 1.8563726
+      objectReference: {fileID: 0}
+    - target: {fileID: 5768316137947624385, guid: 92c6993c45605f84ea39cbb94d1e2502, type: 3}
+      propertyPath: m_Center.y
+      value: -0.14263809
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -476,8 +484,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1362942312}
-  AbilityChooseUI: {fileID: 0}
-  AbilityButtons: []
+  AbilityChooseUI: {fileID: 719614685}
+  AbilityButtons:
+  - {fileID: 1510150962}
+  - {fileID: 1610861209}
+  - {fileID: 369500304}
 --- !u!4 &361502025
 Transform:
   m_ObjectHideFlags: 0
@@ -908,6 +919,9 @@ MonoBehaviour:
   damage: 20
   bulletDistance: 50
   timeBetFire: 0.5
+  thirdBulletDamage: 1
+  lifeStealRatio: 0
+  playerHP: {fileID: 1562599198}
 --- !u!120 &617908512
 LineRenderer:
   serializedVersion: 2
@@ -1894,7 +1908,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.44175175, y: -0.000000015436479, z: 0.0000000076009465, w: 0.89713734}
+  m_LocalRotation: {x: 0.44175175, y: 0.000000015436493, z: -0.000000007600953, w: 0.89713734}
   m_LocalPosition: {x: 0, y: 20, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2469,8 +2483,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 100
-  m_fontSizeBase: 100
+  m_fontSize: 80
+  m_fontSizeBase: 80
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2479,7 +2493,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: -5
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -2604,8 +2618,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 100
-  m_fontSizeBase: 100
+  m_fontSize: 80
+  m_fontSizeBase: 80
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2614,7 +2628,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: -5
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -3117,8 +3131,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   expSlider: {fileID: 678352486}
-  levelUpMultiple: 0.3
-  levelExp: 30
+  levelUpMultiple: 1.3
+  levelExp: 10
 --- !u!1 &1610861207
 GameObject:
   m_ObjectHideFlags: 0
@@ -3351,7 +3365,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1667872141}
-  m_LocalRotation: {x: 0.44175175, y: -0.000000015436479, z: 0.0000000076009465, w: 0.89713734}
+  m_LocalRotation: {x: 0.44175175, y: 0.000000015436493, z: -0.000000007600953, w: 0.89713734}
   m_LocalPosition: {x: 0, y: 20, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3665,7 +3679,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Ability 1
+  m_text: ABILITY 1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: aebc6aaa2c7f50a4da8d5094ff00df99, type: 2}
   m_sharedMaterial: {fileID: -3667502774271464370, guid: aebc6aaa2c7f50a4da8d5094ff00df99, type: 2}
@@ -3692,8 +3706,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 100
-  m_fontSizeBase: 100
+  m_fontSize: 80
+  m_fontSizeBase: 80
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3702,7 +3716,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: -5
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0

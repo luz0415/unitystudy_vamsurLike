@@ -12,13 +12,15 @@ public class BoundaryDetector : MonoBehaviour
         {
             target = GameManager.instance.player;
         }
+        print(target.name);
 
         infiniteGenerator = transform.parent.GetComponent<InfiniteGenerator>();
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject == target && !GameManager.instance.isGameover)
+        if (other.gameObject == target && !GameManager.instance.isGameover)
         {
+            print("DETECT!!!");
             // 상하좌우 채워주기
             infiniteGenerator.FillNearLevels();
         }

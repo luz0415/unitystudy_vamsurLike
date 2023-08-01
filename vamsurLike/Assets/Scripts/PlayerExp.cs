@@ -8,8 +8,8 @@ public class PlayerExp : MonoBehaviour
     private PlayerHP playerHP;
 
     public Slider expSlider;
-    public float levelUpMultiple = 0.3f;
-    public float levelExp = 30f;
+    public float levelUpMultiple = 1.3f;
+    public float levelExp = 10f;
     private float exp;
 
     private void Awake()
@@ -28,7 +28,7 @@ public class PlayerExp : MonoBehaviour
         if(exp >= levelExp) 
         {
             GameManager.instance.LevelUp();
-            exp -= levelExp;
+            exp = 0f;
             levelExp *= levelUpMultiple;
         }
 

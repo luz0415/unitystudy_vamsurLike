@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     {
         get
         {
-            if(m_instance == null)
+            if (m_instance == null)
             {
                 m_instance = FindObjectOfType<GameManager>();
             }
@@ -23,14 +23,18 @@ public class GameManager : MonoBehaviour
 
     public GameObject AbilityChooseUI;
     public Button[] AbilityButtons;
-    
+
+    private PlayerMovement playerMovement;
+    private PlayerHP playerHP;
+    private Gun gun;
+
     private enum Ability
     {
         MoveSpeed,
         MaxHP,
         LifeSteal,
         Damage,
-        FireTime,
+        AttackSpeed,
         ThirdBullet,
         Portion,
         LastNumber
@@ -38,29 +42,33 @@ public class GameManager : MonoBehaviour
 
     private string[] AbilityTexts =
     {
-        "이동속도 증가",
-        "최대체력 증가",
-        "체력흡혈 증가",
-        "데미지 증가",
-        "공격속도 증가",
-        "세번째 공격마다 공격력 증가",
-        "체력 모두 회복",
+        "MOVE SPPED",
+        "MAX HP",
+        "LIFE STEAL",
+        "DAMAGE",
+        "ATTACK SPEED",
+        "THIRD BULLET",
+        "PORTION",
     };
 
-    private int[] AbilityLevels = { 0, 0, 0, 0, 0, 0 };
-    private float[] AbilityIncreaseRatio = { 1.2f, 1.1f, 1.01f, 1.1f, 1.1f, 1.5f };
+    private int[] AbilityLevels = { 0, 0, 0, 0, 0, 0, 0 };
+    private float[] AbilityIncreaseRatio = { 1.1f, 0.1f, 0.01f, 1.1f, 0.9f, 1.5f };
 
     //텍스트 멘트, 능력 올리는 함수들
     public bool isGameover { get; private set; }
 
     private void Awake()
     {
-        if(instance != this)
+        if (instance != this)
         {
             Destroy(gameObject);
         }
 
         AbilityChooseUI.SetActive(false);
+
+        playerMovement = player.GetComponent<PlayerMovement>();
+        playerHP = player.GetComponent<PlayerHP>();
+        gun = player.GetComponentInChildren<Gun>();
     }
 
     public void LevelUp()
@@ -70,19 +78,36 @@ public class GameManager : MonoBehaviour
         AbilityChooseUI.SetActive(true);
         int[] threeAbilities = NotOverlapRandomNumber(0, (int)Ability.LastNumber, 3);
 
-        foreach (int i in threeAbilities)
+        for (int i = 0; i < 3; i++)
         {
-            AbilityButtons[i].GetComponentInChildren<TextMeshPro>().text = AbilityTexts[i];
-            switch(i)
+            AbilityButtons[i].onClick.RemoveAllListeners();
+
+            int thisTimeAbility = threeAbilities[i];
+
+            if(thisTimeAbility != (int)Ability.Portion)
             {
-                case (int) Ability.MoveSpeed: AbilityMoveSpeed(); break;
-                case (int) Ability.MaxHP: break;
-                case (int) Ability.LifeSteal: break;
-                case (int) Ability.Damage: break;
-                case (int) Ability.FireTime: break;
-                case (int) Ability.ThirdBullet: break;
-                case (int) Ability.Portion: break;
+                AbilityButtons[i].GetComponentInChildren<TextMeshProUGUI>().text
+                    = AbilityTexts[thisTimeAbility] + "\nLEVEL " + AbilityLevels[thisTimeAbility];
             }
+            else
+            {
+                AbilityButtons[i].GetComponentInChildren<TextMeshProUGUI>().text
+                    = AbilityTexts[thisTimeAbility];
+            }
+
+            switch (thisTimeAbility)
+            {
+                case (int)Ability.MoveSpeed: AbilityButtons[i].onClick.AddListener(AbilityMoveSpeed); break;
+                case (int)Ability.MaxHP: AbilityButtons[i].onClick.AddListener(AbilityMaxHP); break;
+                case (int)Ability.LifeSteal: AbilityButtons[i].onClick.AddListener(AbilityLifeSteal); break;
+                case (int)Ability.Damage: AbilityButtons[i].onClick.AddListener(AbilityDamage); break;
+                case (int)Ability.AttackSpeed: AbilityButtons[i].onClick.AddListener(AbilityAttackSpeed); break;
+                case (int)Ability.ThirdBullet: AbilityButtons[i].onClick.AddListener(AbilityThirdBullet); break;
+                case (int)Ability.Portion: AbilityButtons[i].onClick.AddListener(AbilityPortion); break;
+            }
+
+            AbilityLevels[thisTimeAbility]++;
+            AbilityButtons[i].onClick.AddListener(OnClickAbilityButton);
         }
     }
 
@@ -107,6 +132,36 @@ public class GameManager : MonoBehaviour
 
     private void AbilityMoveSpeed()
     {
+        playerMovement.moveSpeed *= AbilityIncreaseRatio[(int)Ability.MoveSpeed];
+    }
+    private void AbilityMaxHP()
+    {
+        playerHP.IncreaseStartHP(playerHP.startingHP * AbilityIncreaseRatio[(int)Ability.MaxHP]);
+    }
+    private void AbilityLifeSteal()
+    {
+        gun.lifeStealRatio += AbilityIncreaseRatio[(int)Ability.LifeSteal];
+    }
+    private void AbilityDamage()
+    {
+        gun.damage *= AbilityIncreaseRatio[(int)Ability.Damage];
+    }
+    private void AbilityAttackSpeed()
+    {
+        gun.timeBetFire *= AbilityIncreaseRatio[(int)Ability.AttackSpeed];
+    }
+    private void AbilityThirdBullet()
+    {
+        gun.thirdBulletDamage *= AbilityIncreaseRatio[(int)Ability.ThirdBullet];
+    }
+    private void AbilityPortion()
+    {
+        playerHP.RestoreHP(playerHP.startingHP);
+    }
 
+    private void OnClickAbilityButton()
+    {
+        AbilityChooseUI.SetActive(false);
+        Time.timeScale = 1.0f;
     }
 }

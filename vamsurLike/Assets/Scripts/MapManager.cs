@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 public class MapManager : MonoBehaviour
 {
@@ -23,17 +24,28 @@ public class MapManager : MonoBehaviour
         instance = this;
         lastClearTime = 0f;
     }
-    
+
+    private void Start()
+    {
+        StartCoroutine(FirstBake());
+    }
+
+    IEnumerator FirstBake()
+    {
+        yield return new WaitForSeconds(1f);
+        navMeshBaker.BakeNavMesh();
+    }
+
     private void Update()
     {
-        if(lastClearTime + timeBetCleanLevels <= Time.time)
-        {
-            lastClearTime = Time.time;
+        //if(lastClearTime + timeBetCleanLevels <= Time.time)
+        //{
+        //    lastClearTime = Time.time;
             if(levelGroup.childCount > 5)
             {
                 CleanLevels();
             }
-        }
+        //}
     }
 
     public void InstantiateInSpawningPool()

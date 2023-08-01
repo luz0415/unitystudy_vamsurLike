@@ -21,6 +21,7 @@ public class InfiniteGenerator : MonoBehaviour
     {
         nearLevels = new InfiniteGenerator[] { null, null, null, null };
     }
+
     private void OnDisable()
     {
         if (nearLevels[up] != null)

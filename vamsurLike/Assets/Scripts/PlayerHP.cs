@@ -33,6 +33,20 @@ public class PlayerHP : LivingEntity
         playerHPSlider.value -= damage;
     }
 
+    public override void RestoreHP(float restoreHP)
+    {
+        base.RestoreHP(restoreHP);
+        playerHPSlider.value = HP;
+    }
+
+    public void IncreaseStartHP(float increaseHP)
+    {
+        startingHP += increaseHP;
+        HP += increaseHP;
+        playerHPSlider.maxValue = startingHP;
+        playerHPSlider.value = HP;
+    }
+
     public override void Dead()
     {
         base.Dead();
