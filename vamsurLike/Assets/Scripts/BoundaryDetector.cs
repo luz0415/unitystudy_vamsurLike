@@ -20,7 +20,6 @@ public class BoundaryDetector : MonoBehaviour
     {
         if (other.gameObject == target && !GameManager.instance.isGameover)
         {
-            print("DETECT!!!");
             // 상하좌우 채워주기
             infiniteGenerator.FillNearLevels();
         }

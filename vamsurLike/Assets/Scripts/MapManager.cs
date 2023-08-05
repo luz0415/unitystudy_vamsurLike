@@ -15,14 +15,12 @@ public class MapManager : MonoBehaviour
     public Transform levelGroup;
 
     public float timeBetCleanLevels = 2.0f;
-    private float lastClearTime;
 
     public NavMeshBaker navMeshBaker;
 
     private void Awake()
     {
         instance = this;
-        lastClearTime = 0f;
     }
 
     private void Start()
