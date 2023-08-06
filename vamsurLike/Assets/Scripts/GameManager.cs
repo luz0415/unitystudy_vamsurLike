@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -27,6 +28,10 @@ public class GameManager : MonoBehaviour
     private PlayerMovement playerMovement;
     private PlayerHP playerHP;
     private Gun gun;
+
+    public TextMeshProUGUI timeText;
+    private int timeMinutes;
+    private int timeSeconds;
 
     private enum Ability
     {
@@ -56,6 +61,8 @@ public class GameManager : MonoBehaviour
 
     //텍스트 멘트, 능력 올리는 함수들
     public bool isGameover { get; private set; }
+    public GameObject gameoverUI;
+    public TextMeshProUGUI bestTimeText;
 
     private void Awake()
     {
@@ -69,6 +76,70 @@ public class GameManager : MonoBehaviour
         playerMovement = player.GetComponent<PlayerMovement>();
         playerHP = player.GetComponent<PlayerHP>();
         gun = player.GetComponentInChildren<Gun>();
+
+        timeMinutes = 0;
+        timeSeconds = 0;
+    }
+    private void Update()
+    {
+        if (isGameover)
+        {
+            RestartGame();
+            return;
+        }
+
+        timeMinutes = (int)Time.time / 60;
+        timeSeconds = (int)Time.time % 60;
+
+        timeText.text = TimeToString(timeMinutes, timeSeconds);
+    }
+
+    public void EndGame()
+    {
+        int bestTime = PlayerPrefs.GetInt("Time");
+        if(bestTime < timeMinutes * 60 + timeMinutes)
+        {
+            bestTime = timeMinutes * 60 + timeMinutes;
+            PlayerPrefs.SetInt("Time", timeMinutes * 60 + timeSeconds);
+        }
+        bestTimeText.text = "Best Time\n"+TimeToString(bestTime / 60, bestTime % 60);
+
+        isGameover = true;
+        timeText.gameObject.SetActive(false);
+        AbilityChooseUI.SetActive(false);
+        gameoverUI.SetActive(true);
+    }
+
+    private void RestartGame()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+    }
+
+    private string TimeToString(int minutes, int seconds)
+    {
+        string stringMinutes;
+        string stringSeconds;
+        if (timeMinutes < 10)
+        {
+            stringMinutes = "0" + timeMinutes.ToString();
+        }
+        else
+        {
+            stringMinutes = timeMinutes.ToString();
+        }
+        if (timeSeconds < 10)
+        {
+            stringSeconds = "0" + timeSeconds.ToString();
+        }
+        else
+        {
+            stringSeconds = timeSeconds.ToString();
+        }
+
+        return stringMinutes + ":" + stringSeconds;
     }
 
     public void LevelUp()

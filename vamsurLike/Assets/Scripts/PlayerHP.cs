@@ -55,5 +55,7 @@ public class PlayerHP : LivingEntity
 
         playerMovement.enabled = false;
         playerShooter.enabled = false;
+
+        GameManager.instance.EndGame();
     }
 }
