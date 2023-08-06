@@ -41,9 +41,9 @@ public class Gun : MonoBehaviour
 
     public void Fire()
     {
-        if(lastFireTime + timeBetFire <= Time.time)
+        if(lastFireTime + timeBetFire <= Time.timeSinceLevelLoad)
         {
-            lastFireTime = Time.time;
+            lastFireTime = Time.timeSinceLevelLoad;
             Shot();
         }
     }

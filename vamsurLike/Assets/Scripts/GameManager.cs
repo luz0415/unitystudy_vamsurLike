@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -88,8 +89,8 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        timeMinutes = (int)Time.time / 60;
-        timeSeconds = (int)Time.time % 60;
+        timeMinutes = (int)Time.timeSinceLevelLoad / 60;
+        timeSeconds = (int)Time.timeSinceLevelLoad % 60;
 
         timeText.text = TimeToString(timeMinutes, timeSeconds);
     }
@@ -122,21 +123,21 @@ public class GameManager : MonoBehaviour
     {
         string stringMinutes;
         string stringSeconds;
-        if (timeMinutes < 10)
+        if (minutes < 10)
         {
-            stringMinutes = "0" + timeMinutes.ToString();
+            stringMinutes = "0" + minutes.ToString();
         }
         else
         {
-            stringMinutes = timeMinutes.ToString();
+            stringMinutes = minutes.ToString();
         }
-        if (timeSeconds < 10)
+        if (seconds < 10)
         {
-            stringSeconds = "0" + timeSeconds.ToString();
+            stringSeconds = "0" + seconds.ToString();
         }
         else
         {
-            stringSeconds = timeSeconds.ToString();
+            stringSeconds = seconds.ToString();
         }
 
         return stringMinutes + ":" + stringSeconds;
@@ -177,7 +178,6 @@ public class GameManager : MonoBehaviour
                 case (int)Ability.Portion: AbilityButtons[i].onClick.AddListener(AbilityPortion); break;
             }
 
-            AbilityLevels[thisTimeAbility]++;
             AbilityButtons[i].onClick.AddListener(OnClickAbilityButton);
         }
     }
@@ -204,26 +204,32 @@ public class GameManager : MonoBehaviour
     private void AbilityMoveSpeed()
     {
         playerMovement.moveSpeed *= AbilityIncreaseRatio[(int)Ability.MoveSpeed];
+        AbilityLevels[(int)Ability.MoveSpeed]++;
     }
     private void AbilityMaxHP()
     {
         playerHP.IncreaseStartHP(playerHP.startingHP * AbilityIncreaseRatio[(int)Ability.MaxHP]);
+        AbilityLevels[(int)Ability.MaxHP]++;
     }
     private void AbilityLifeSteal()
     {
         gun.lifeStealRatio += AbilityIncreaseRatio[(int)Ability.LifeSteal];
+        AbilityLevels[(int)Ability.LifeSteal]++;
     }
     private void AbilityDamage()
     {
         gun.damage *= AbilityIncreaseRatio[(int)Ability.Damage];
+        AbilityLevels[(int)Ability.Damage]++;
     }
     private void AbilityAttackSpeed()
     {
         gun.timeBetFire *= AbilityIncreaseRatio[(int)Ability.AttackSpeed];
+        AbilityLevels[(int)Ability.AttackSpeed]++;
     }
     private void AbilityThirdBullet()
     {
         gun.thirdBulletDamage *= AbilityIncreaseRatio[(int)Ability.ThirdBullet];
+        AbilityLevels[(int)Ability.ThirdBullet]++;
     }
     private void AbilityPortion()
     {

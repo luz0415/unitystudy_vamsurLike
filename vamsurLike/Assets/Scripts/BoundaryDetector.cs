@@ -12,7 +12,6 @@ public class BoundaryDetector : MonoBehaviour
         {
             target = GameManager.instance.player;
         }
-        print(target.name);
 
         infiniteGenerator = transform.parent.GetComponent<InfiniteGenerator>();
     }

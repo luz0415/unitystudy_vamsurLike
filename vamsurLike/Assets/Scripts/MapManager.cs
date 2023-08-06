@@ -36,14 +36,10 @@ public class MapManager : MonoBehaviour
 
     private void Update()
     {
-        //if(lastClearTime + timeBetCleanLevels <= Time.time)
-        //{
-        //    lastClearTime = Time.time;
-            if(levelGroup.childCount > 5)
-            {
-                CleanLevels();
-            }
-        //}
+        if(levelGroup.childCount > 5)
+        {
+            CleanLevels();
+        }
     }
 
     public void InstantiateInSpawningPool()
@@ -81,7 +77,6 @@ public class MapManager : MonoBehaviour
                 }
             }
         }
-        print(nearestLevel.gameObject.name);
         List<GameObject> remainLevels = new List<GameObject> { nearestLevel.gameObject };
 
         for (int i = 0; i < 4; i++)

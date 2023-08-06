@@ -53,16 +53,16 @@ public class EnemySpawner : MonoBehaviour
     {
         if (GameManager.instance != null && GameManager.instance.isGameover) return;
 
-        if(lastTimeSpawn + timeBetSpawn <= Time.time)
+        if(lastTimeSpawn + timeBetSpawn <= Time.timeSinceLevelLoad)
         {
             timeBetSpawn = Random.Range(timeMinSpawn, timeMaxSpawn);
-            lastTimeSpawn = Time.time;
+            lastTimeSpawn = Time.timeSinceLevelLoad;
             spawnEnemy(1);
         }
 
-        if (lastTimeWave + timeBetWave <= Time.time)
+        if (lastTimeWave + timeBetWave <= Time.timeSinceLevelLoad)
         {
-            lastTimeWave = Time.time;
+            lastTimeWave = Time.timeSinceLevelLoad;
             
             if(waveCount == 4)
             {
